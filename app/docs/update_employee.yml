@@ -1,0 +1,38 @@
+summary: Update an employee
+description: Update an existing employee's information.
+tags:
+  - Employees
+parameters:
+  - in: path
+    name: id
+    required: true
+    type: integer
+    description: The ID of the employee.
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        department:
+          type: string
+        role:
+          type: string
+    example:
+      name: "John Smith"
+      email: "john.smith@example.com"
+      department: "Engineering"
+      role: "Senior Developer"
+responses:
+  200:
+    description: Employee updated successfully.
+    schema:
+      $ref: '#/definitions/Employee'
+  400:
+    description: Bad request (validation errors).
+  404:
+    description: Employee not found.

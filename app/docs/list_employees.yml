@@ -1,0 +1,36 @@
+summary: List employees
+description: Retrieve a paginated list of employees with optional filters by department and role.
+tags:
+  - Employees
+parameters:
+  - in: query
+    name: page
+    type: integer
+    required: false
+    description: The page number to retrieve.
+  - in: query
+    name: department
+    type: string
+    required: false
+    description: Filter by department.
+  - in: query
+    name: role
+    type: string
+    required: false
+    description: Filter by role.
+responses:
+  200:
+    description: A list of employees.
+    schema:
+      type: object
+      properties:
+        employees:
+          type: array
+          items:
+            $ref: '#/definitions/Employee'
+        total:
+          type: integer
+        pages:
+          type: integer
+        current_page:
+          type: integer

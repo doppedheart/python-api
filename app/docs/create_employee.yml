@@ -1,0 +1,31 @@
+summary: Create a new employee
+description: Endpoint to create a new employee in the system.
+tags:
+  - Employees
+parameters:
+  - in: body
+    name: body
+    required: true
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        department:
+          type: string
+        role:
+          type: string
+    example:
+      name: "John Doe"
+      email: "john.doe@example.com"
+      department: "Engineering"
+      role: "Developer"
+responses:
+  201:
+    description: Employee created successfully
+    schema:
+      $ref: '#/definitions/Employee'
+  400:
+    description: Bad request (validation errors or email already exists)

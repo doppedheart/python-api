@@ -1,0 +1,264 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Access API",
+        "description": "API documentation"
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "summary": "Login to the system",
+                "description": "Login to the system with the provided credentials",
+                "tags": [
+                    "Authentication"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "credentials",
+                        "description": "Login credentials",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string",
+                                    "description": "Username"
+                                },
+                                "password": {
+                                    "type": "string",
+                                    "description": "Password"
+                                }
+                            },
+                            "required": [
+                                "username",
+                                "password"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "token": {
+                                    "type": "string",
+                                    "description": "Authorization token"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/employees": {
+            "post": {
+                "summary": "Create a new employee",
+                "description": "Create a new employee with the provided details",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Employees"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "employee",
+                        "description": "Employee details",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Employee created successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get a list of employees",
+                "description": "Get a list of employees with pagination and filtering",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Employees"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "page",
+                        "description": "Page number",
+                        "type": "integer",
+                        "default": 1
+                    },
+                    {
+                        "in": "query",
+                        "name": "per_page",
+                        "description": "Number of employees per page",
+                        "type": "integer",
+                        "default": 10
+                    },
+                    {
+                        "in": "query",
+                        "name": "department",
+                        "description": "Department filter",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "role",
+                        "description": "Role filter",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employees retrieved successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/api/employees/{id}": {
+            "get": {
+                "summary": "Get an employee by ID",
+                "description": "Get an employee by ID",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Employees"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Employee ID",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee retrieved successfully"
+                    },
+                    "404": {
+                        "description": "Employee not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update an employee",
+                "description": "Update an employee with the provided details",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Employees"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Employee ID",
+                        "type": "integer",
+                        "required": true
+                    },
+                    {
+                        "in": "body",
+                        "name": "employee",
+                        "description": "Employee details",
+                        "schema": {
+                            "$ref": "#/definitions/Employee"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Employee updated successfully"
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete an employee",
+                "description": "Delete an employee by ID",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": [
+                    "Employees"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "description": "Employee ID",
+                        "type": "integer",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Employee deleted successfully"
+                    },
+                    "404": {
+                        "description": "Employee not found"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Employee": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "department": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

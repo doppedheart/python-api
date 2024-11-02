@@ -1,0 +1,15 @@
+summary: Delete an employee
+description: Remove an employee from the system by their unique ID.
+tags:
+  - Employees
+parameters:
+  - in: path
+    name: id
+    required: true
+    type: integer
+    description: The ID of the employee.
+responses:
+  204:
+    description: Employee deleted successfully.
+  404:
+    description: Employee not found.
